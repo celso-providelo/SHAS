@@ -1,0 +1,13 @@
+body {
+  /* body goes to the bottom of the topbar */
+  padding-top: 50px;
+  /* Add 50px space before the 55px footer */
+  padding-bottom: 105px;
+}
+
+#messages {
+  padding-top: 10px;
+  overflow: auto;
+  height: 500px;
+}
+
