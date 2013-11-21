@@ -79,17 +79,130 @@
 
         <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
 
-          <div class="page-header">
-            <h1>Simple Home Automation Service</h1>
+          <div class="jumbotron">
+            <h1>SHAS <small>Simple Home Automation Service</small></h1>
+            <p><a class="btn btn-primary btn-lg"
+                  role="button">Learn more</a></p>
           </div>
 
-          <form id="input-form" class="form-inline">
-            <div class="form-group">
-              <input id="input-text" type="text" class="form-control"
-                     placeholder="Enter text here!" autofocus />
+          <div id="devices" class="row">
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+              <div class="thumbnail">
+                <img src="static/img/bulb-off.png" class="img-rounded">
+                <div class="caption">
+                  <h4>Sala de Jantar</h4>
+                  <p><small>60 W</small></p>
+                  <p>
+                    <a href="#" class="btn btn-xs btn-primary" role="button">
+                      <span class="glyphicon glyphicon-wrench"></span>
+                    </a>
+                    <a href="#" class="btn btn-xs btn-primary" role="button">
+                      <span class="glyphicon glyphicon-info-sign"></span>
+                    </a>
+                    <a href="#" class="btn btn-xs btn-primary" role="button">
+                      <span class="glyphicon glyphicon-list"></span>
+                    </a>
+                    <a href="#" class="btn btn-xs btn-primary" role="button">
+                      <span class="glyphicon glyphicon-home"></span>
+                    </a>
+                    <a href="#" class="btn btn-xs btn-primary
+                                       btn-on-off btn-light"
+                       role="button">
+                      <span class="glyphicon glyphicon-off"></span>
+                    </a>
+                  </p>
+                </div>
+              </div>
             </div>
-            <button class="btn btn-primary" type="submit">Send</button>
-          </form>
+
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+              <div class="thumbnail">
+                <img src="static/img/socket-off.png" class="img-rounded">
+                <div class="caption">
+                  <h4>Sala de TV</h4>
+                  <p><small>40 W</small></p>
+                  <p>
+                    <a href="#" class="btn btn-xs btn-primary" role="button">
+                      <span class="glyphicon glyphicon-wrench"></span>
+                    </a>
+                    <a href="#" class="btn btn-xs btn-primary" role="button">
+                      <span class="glyphicon glyphicon-info-sign"></span>
+                    </a>
+                    <a href="#" class="btn btn-xs btn-primary" role="button">
+                      <span class="glyphicon glyphicon-list"></span>
+                    </a>
+                    <a href="#" class="btn btn-xs btn-primary" role="button">
+                      <span class="glyphicon glyphicon-home"></span>
+                    </a>
+                    <a href="#" class="btn btn-xs btn-primary
+                                       btn-on-off btn-socket"
+                       role="button">
+                      <span class="glyphicon glyphicon-off"></span>
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+              <div class="thumbnail">
+                <img src="static/img/bulb-off.png" class="img-rounded">
+                <div class="caption">
+                  <h4>Garagem</h4>
+                  <p><small>100 W</small></p>
+                  <p>
+                    <a href="#" class="btn btn-xs btn-primary" role="button">
+                      <span class="glyphicon glyphicon-wrench"></span>
+                    </a>
+                    <a href="#" class="btn btn-xs btn-primary" role="button">
+                      <span class="glyphicon glyphicon-info-sign"></span>
+                    </a>
+                    <a href="#" class="btn btn-xs btn-primary" role="button">
+                      <span class="glyphicon glyphicon-list"></span>
+                    </a>
+                    <a href="#" class="btn btn-xs btn-primary" role="button">
+                      <span class="glyphicon glyphicon-home"></span>
+                    </a>
+                    <a href="#" class="btn btn-xs btn-primary
+                                       btn-on-off btn-light"
+                       role="button">
+                      <span class="glyphicon glyphicon-off"></span>
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+              <div class="thumbnail">
+                <img src="static/img/socket-off.png" class="img-rounded">
+                <div class="caption">
+                  <h4>Cozinha</h4>
+                  <p><small>120 W</small></p>
+                  <p>
+                    <a href="#" class="btn btn-xs btn-primary" role="button">
+                      <span class="glyphicon glyphicon-wrench"></span>
+                    </a>
+                    <a href="#" class="btn btn-xs btn-primary" role="button">
+                      <span class="glyphicon glyphicon-info-sign"></span>
+                    </a>
+                    <a href="#" class="btn btn-xs btn-primary" role="button">
+                      <span class="glyphicon glyphicon-list"></span>
+                    </a>
+                    <a href="#" class="btn btn-xs btn-primary" role="button">
+                      <span class="glyphicon glyphicon-home"></span>
+                    </a>
+                    <a href="#" class="btn btn-xs btn-primary
+                                       btn-on-off btn-socket"
+                       role="button">
+                      <span class="glyphicon glyphicon-off"></span>
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
 
           <div id="messages"></div>
 
@@ -111,29 +224,59 @@ $(document).ready(function() {
     };
 
     ws.onopen = function() {
-        console.log('ws opened!');
         // Authenticate ?
-        //ws.send(JSON.stringify({ text: 'open' }));
+        ws.send(JSON.stringify({ action: 'start' }));
     };
 
     ws.onmessage = function(message) {
        var data = JSON.parse(message.data);
+       var klass = "";
+       if (data.action == "ON") {
+           klass = "panel-info";
+       } else {
+           klass = "panel-warning";
+       }
+
        $("#messages").append(
-           "<div class='panel panel-default'>" +
-           "<div class='panel-heading'>Message</div>" +
-           "<div class='panel-body'>" +
-           $('<span/>').text(data.text).html() +
-            "</div></div>"
+           "<div class='panel " + klass + "'>" +
+           "<div class='panel-heading'>" +
+           $('<span/>').text(data.label).html() +
+           "&nbsp;" +
+           $('<span/>').text(data.action).html() +
+           " on " +
+           $('<span/>').text(data.timestamp).html() +
+            "</div>"
        );
        $("#messages").stop().animate({
             scrollTop: $('#messages')[0].scrollHeight}, 800);
     };
 
-    $("#input-form").on("submit", function(event) {
+    $(".btn-on-off").click(function(e) {
         event.preventDefault();
-        var text   = $("#input-text")[0].value;
-        ws.send(JSON.stringify({ text: text }));
-        $("#input-text")[0].value = "";
+        var img = $(this).parent().parent().parent().children()[0];
+        var label = $(this).parent().parent().children()[0].textContent;
+        var action = "";
+        if ($(this).hasClass("btn-primary")) {
+           if ($(this).hasClass("btn-socket")) {
+               img.src = "static/img/socket-on.png";
+           } else {
+               img.src = "static/img/bulb-on.png";
+           }
+           $(this).removeClass("btn-primary");
+           $(this).addClass("btn-default");
+           action = "ON";
+        } else {
+           if ($(this).hasClass("btn-socket")) {
+               img.src = "static/img/socket-off.png";
+           } else {
+               img.src = "static/img/bulb-off.png";
+           }
+           $(this).addClass("btn-primary");
+           $(this).removeClass("btn-default");
+           action = "OFF";
+        }
+
+        ws.send(JSON.stringify({ label: label, action: action }));
     });
 
 });

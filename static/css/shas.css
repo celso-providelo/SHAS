@@ -8,6 +8,10 @@ body {
 #messages {
   padding-top: 10px;
   overflow: auto;
-  height: 500px;
+  height: 320px;
+}
+
+#devices {
+  padding-bottom: 10px;
 }
 
